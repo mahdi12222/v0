@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="col-md-12">
+    <div class="clearfix">
+        <a class="btn btn-secondary float-right" href="{{ path('bloc_index') }}">Retour</a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Modifier un bloc</div>
+        <div class="panel-body">
+            {{ include('bloc/_form.html.twig', {'button_label': 'Modifier'}) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

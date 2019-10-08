@@ -1,0 +1,18 @@
+.bloc{
+    opacity:1;
+    cursor:pointer;
+}
+
+.bloc:hover > a .card{
+    background-color: #e5e9ea !important;
+    cursor:pointer;
+}
+
+.bloc .card{
+    border:0;
+}
+
+.bloc a{
+    font-weight: bold;
+    text-decoration:none;
+}

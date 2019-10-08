@@ -1,0 +1,26 @@
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.libelle) }}</div>
+    <div class="col-md-6">{{ form_row(form.parent) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-12">{{ form_row(form.information) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-4">{{ form_row(form.imageFile) }}</div>
+    <div class="col-md-4">{{ form_row(form.glpicategory) }}</div>
+    <div class="col-md-4">{{ form_row(form.type) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-4">{{ form_row(form.ordre) }}</div>
+    <div class="col-md-4">{{ form_row(form.logiciel) }}</div>
+    <div class="col-md-4">{{ form_row(form.affiche) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-12">{{ form_row(form.description) }}</div>
+</div>
+<button class="btn btn-success">{{ button_label|default('Valider') }}</button>
+
+{{ form_end(form) }}
+

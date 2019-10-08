@@ -1,0 +1,39 @@
+{% extends 'tickets/index.html.twig' %}
+
+{% block list %}
+
+<!-- Liste des tickets -->
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Mes tickets
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>N° ticket</th>
+                        <th>Titre</th>
+                        <th>Etat</th>
+                        <th>Création</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ticket in tickets %}
+                        <tr id="ligneTicket">
+                            <td><a class="link-ticket" href="{{ path('ticket.index') }}{{ ticket.id }}" title="Plus d'informations">{{ ticket.id }}</a></td>
+                            <td><a class="link-ticket" href="{{ path('ticket.index') }}{{ ticket.id }}" title="Plus d'informations">{{ ticket.name }}</a></td>
+                            <td>{{ ticket.status }}</td>
+                            <td>{{ ticket.date_creation }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin Liste des tickets -->
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">123</a></li>
+        <li class="breadcrumb-item active">Ouvrir un ticket</li>
+    </ol>
+
+    <div class="row">
+    {% for bloc in blocs %}
+        <div class="bloc col-lg-3 col-md-3 col-xs-6">
+        <a href="{{ path ('home_bloc', {id: bloc.id}) }}" title="{{ bloc.description }}">
+            <div class="card bg-light mb-3 rounded" >
+                <div class="card-body mx-auto">
+                    <h4 class="card-title text-lg-center"><img style="max-height:80px; max-width: 230px;" src="{{ vich_uploader_asset(bloc, 'imageFile') }}" /></h4>
+                    <p class="card-text text-lg-center">{{ bloc.libelle }}</p>
+                </div>
+            </div>
+        </a>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}
+

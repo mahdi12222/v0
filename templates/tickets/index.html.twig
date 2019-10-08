@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block body %}
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">123</a></li>
+        <li class="breadcrumb-item active">Tickets</li>
+    </ol>
+
+    <div class="row m-2">
+
+{#        <h4>Tickets</h4>#}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width:5%;">N° ticket</th>
+                <th style="width:30%;">Titre</th>
+                <th style="width:15%;">Etat</th>
+                <th style="width:15%;">Création</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ticket in tickets %}
+                <tr id="ligneTicket">
+                    <td><a class="link-ticket" href="{{ path('ticket_index') }}{{ ticket.id }}" title="Plus d'informations">{{ ticket.id }}</a></td>
+                    <td><a class="link-ticket" href="{{ path('ticket_index') }}{{ ticket.id }}" title="Plus d'informations">{{ ticket.name }}</a></td>
+                    <td>{{ ticket.status }}</td>
+                    <td>{{ ticket.date_creation|date("m/d/Y \\à H\\hi") }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+</div>
+
+
+{% endblock %}

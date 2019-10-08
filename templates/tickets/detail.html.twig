@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">123</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('ticket_index') }}">Tickets</a></li>
+        <li class="breadcrumb-item active">Détail d'un ticket</li>
+    </ol>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="row m-2">
+        <div class="col-md-12">
+            <h4>{{ ticket.name }} <small class="text-muted">({{ ticket.id }})</small></h4>
+        <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    {% for key, type in users %}
+                        <p><strong>{{ key }} : </strong></p>
+                        <p>
+                            {% for key, user in type %}
+                                {{ user }}<br>
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Statut : </strong>{{ ticket.status|raw }}</p>
+
+                    {% for key, type in items %}
+                        {% if key == 'Software' %}
+                            <p><strong>Logiciel : </strong></p>
+                            <p>
+                                {% for key, software in type %}
+                                    {{ software }}<br>
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+            {% if ticket.status == 5 %}
+                <form action="" method="POST">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Approbation de la solution :</strong><br /><br />
+                            <center>
+                                <button type="submit" name="approveSolution" class="btn btn-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Approuver</button>
+                                <button type="submit" name="refuseSolution" class="btn btn-danger"><i class="fa fa-times-circle" aria-hidden="true"></i> Refuser</button>
+                            </center>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Commentaire :</strong>
+                            <em>(Facultatif en cas d'acceptation)</em>
+                            <textarea name="noteSolution" class="form-control" rows="3" ></textarea>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+            </div>
+
+            <p><strong>Historique des actions : </strong></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card bg-info text-light mb-3">
+                        <div class="card-header">
+                            <span style="font-size:12px; float:right;">{{ ticket.date_creation|date('d/m/Y \\à H\\hi') }}</span>
+                            {% for key, type in users %}
+                                {% if loop.first %}
+                                    {% for key, user in type %}
+                                        {% if loop.first %}
+                                            {{ user }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ ticket.content|raw }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+
+            {% for note in histo %}
+            {% set dateNote = '<span style="font-size:12px; float:right;">'~note.date_creation|date('d/m/Y \\à H\\hi')~'</span>' %}
+                <div class="row">
+                {% if note.solutiontypes_id is defined %}
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="card bg-success text-light mb-3">
+                            <div class="card-header">
+                                {{ note.users_id }}
+                                {{ dateNote|raw }}
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{ note.content|raw }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    {% if note.is_private == 0 %}
+                        {% if note.timeline_position == 4 %}
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-header">
+                                        {{ note.users_id }}
+                                        {{ dateNote|raw }}
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">{{ note.content|raw }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-md-6">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-header">
+                                        {{ note.users_id }}
+                                        {{ dateNote|raw }}
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">{{ note.content|raw }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                </div>
+            {% endfor %}
+
+            </div>
+
+
+        {% if ticket.status < 5 %}
+            <div class="col-6">
+                <!-- Formulaire ajout note -->
+                {{ form_errors(form) }}
+                {{ form_start(form) }}
+                    <strong>{{ form_row(form.note, {'attr':{'rows':'10', 'cols':'50'}}) }}</strong>
+                    {{ form_widget(form._token) }}
+                <button class="btn btn-success">{{ button_label|default('Valider') }}</button>
+            </div>
+        {% endif %}
+
+
+        </div>
+
+
+
+
+
+
+
+{% endblock %}
